@@ -24,8 +24,8 @@ Welcome to **Weather Dashboard** – a modern, AI-powered weather app built with
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/your-username/weather-dashboard_2.git
-   cd weather-dashboard_2
+   git clone https://github.com/koustavx08/weather-dashboard.git
+   cd weather-dashboard
    ```
 2. **Install dependencies:**
    ```sh

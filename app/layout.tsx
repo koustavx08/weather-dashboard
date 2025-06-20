@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "AI Weather Dashboard",
+  title: "Weather Dashboard",
   description: "Advanced weather dashboard with AI-powered insights and forecasts"
 }
 

@@ -63,7 +63,7 @@ export function WeatherDashboard() {
           <div>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
               <Brain className="h-10 w-10 text-blue-500" />
-              AI Weather Dashboard
+              Weather Dashboard
             </h1>
             <p className="text-gray-600 dark:text-gray-400 mt-2">Get intelligent weather insights powered by AI</p>
           </div>
