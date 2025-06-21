@@ -17,8 +17,6 @@ Welcome to **Weather Dashboard** – a modern, AI-powered weather app built with
 
 ![Weather Dashboard Screenshot](public/image.png)
 
-*Above: Example of the Weather Dashboard interface. Replace with your own screenshot!*
-
 ## 🚀 Features
 
 - **Current Weather:** Instantly view the latest weather conditions for any location.
