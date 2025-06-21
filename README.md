@@ -1,6 +1,23 @@
 # Weather Dashboard
 
+![Vercel](https://img.shields.io/badge/Deployed-Vercel-brightgreen?logo=vercel)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Next.js](https://img.shields.io/badge/Built%20With-Next.js-blue?logo=next.js)
+
 Welcome to **Weather Dashboard** – a modern, AI-powered weather app built with Next.js, TypeScript, and Tailwind CSS. Get real-time weather updates, forecasts, and smart insights, all in a beautiful and responsive interface.
+
+## 🌟 Why Weather Dashboard?
+
+- **AI-Powered:** Get smart, natural language weather insights and recommendations.
+- **Beautiful UI:** Clean, modern, and responsive design for all devices.
+- **Instant Alerts:** Stay ahead with real-time severe weather notifications.
+- **Open Source:** Free to use, modify, and contribute!
+
+## 📸 Preview
+
+![Weather Dashboard Screenshot](public/image.png)
+
+*Above: Example of the Weather Dashboard interface. Replace with your own screenshot!*
 
 ## 🚀 Features
 
@@ -59,11 +76,26 @@ Welcome to **Weather Dashboard** – a modern, AI-powered weather app built with
 
 ## 🌐 Demo
 
-Coming soon!
+Check out the live app here: [https://weather-dashboard-koustavx08.vercel.app/](https://weather-dashboard-koustavx08.vercel.app/)
+
+## 🗺️ Roadmap
+
+- [ ] Multi-language support
+- [ ] User accounts and saved locations
+- [ ] More AI-powered insights
+- [ ] PWA support for offline use
+- [ ] Customizable alert preferences
 
 ## 🙌 Contributing
 
 Contributions are welcome! Please open issues and pull requests to help improve the project.
+
+## 🙋 Contact
+
+Have questions, feedback, or want to collaborate?
+- Open an issue or pull request
+- Email: koustavsinghcollege@gmail.com
+- Twitter: [@koustavx08](https://twitter.com/koustavx08)
 
 ## 📄 License
 
