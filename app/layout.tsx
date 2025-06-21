@@ -9,7 +9,10 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Weather Dashboard",
-  description: "Advanced weather dashboard with AI-powered insights and forecasts"
+  description: "Advanced weather dashboard with AI-powered insights and forecasts",
+  icons: {
+    icon: "/favicon.svg"
+  }
 }
 
 export default function RootLayout({
