@@ -2,7 +2,14 @@ import { groq } from "@ai-sdk/groq"
 import { generateText } from "ai"
 import type { WeatherData, ForecastData, WeatherInsight, WeatherAlert } from "@/types/weather"
 
-const GROQ_API_KEY = process.env.GROQ_API_KEY || "YOUR_GROQ_API_KEY"
+const GROQ_API_KEY = process.env.GROQ_API_KEY
+if (!GROQ_API_KEY || GROQ_API_KEY === "YOUR_GROQ_API_KEY") {
+  throw new Error(
+    "GROQ_API_KEY is not set. Please add your Groq API key to a .env file as GROQ_API_KEY=your_real_groq_api_key and restart the server."
+  )
+}
+// Updated model name to a supported one
+const groqModel = groq("llama3-70b-8192", { apiKey: GROQ_API_KEY })
 
 export async function generateWeatherSummary(weatherData: WeatherData, forecast: ForecastData | null): Promise<string> {
   try {
@@ -19,7 +26,7 @@ ${forecast ? `7-day forecast available with temperatures ranging from ${Math.min
     `
 
     const { text } = await generateText({
-      model: groq("llama-3.1-70b-versatile"),
+      model: groqModel,
       prompt: `You are a professional meteorologist. Provide a concise, human-readable weather summary based on the following data. Make it informative yet easy to understand, highlighting the most important aspects of the current weather and any notable patterns in the forecast. Keep it under 150 words.
 
 ${weatherContext}
@@ -61,7 +68,7 @@ ${
     `
 
     const { text } = await generateText({
-      model: groq("llama-3.1-70b-versatile"),
+      model: groqModel,
       prompt: `You are a helpful weather assistant. Based on the weather data, provide 3-4 personalized insights in the following categories: clothing, activity, and travel. Each insight should be practical and actionable.
 
 ${weatherContext}
@@ -97,7 +104,7 @@ Generate insights:`,
 export async function processNaturalLanguageQuery(query: string): Promise<string | null> {
   try {
     const { text } = await generateText({
-      model: groq("llama-3.1-70b-versatile"),
+      model: groqModel,
       prompt: `You are a weather query processor. Extract the city name from natural language weather queries. If no city is mentioned, return null.
 
 Examples:
@@ -112,7 +119,11 @@ Query: "${query}"
 Return only the city name or null:`,
     })
 
-    const cityName = text.trim()
+    let cityName = text.trim()
+    // Remove leading/trailing quotes if present
+    if ((cityName.startsWith('"') && cityName.endsWith('"')) || (cityName.startsWith("'") && cityName.endsWith("'"))) {
+      cityName = cityName.slice(1, -1).trim()
+    }
     return cityName.toLowerCase() === "null" ? null : cityName
   } catch (error) {
     console.error("Error processing natural language query:", error)
@@ -146,7 +157,7 @@ ${
     `
 
     const { text } = await generateText({
-      model: groq("llama-3.1-70b-versatile"),
+      model: groqModel,
       prompt: `You are a weather alert system. Analyze the weather data and generate relevant alerts for severe or notable conditions. Consider:
 
 - Extreme temperatures (below 0°C or above 35°C)

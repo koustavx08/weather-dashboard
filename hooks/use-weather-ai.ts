@@ -2,12 +2,6 @@
 
 import { useState, useEffect } from "react"
 import type { WeatherData, ForecastData, WeatherInsight, WeatherAlert } from "@/types/weather"
-import {
-  generateWeatherSummary,
-  generateWeatherInsights,
-  processNaturalLanguageQuery as processQuery,
-  generateSmartAlerts,
-} from "@/lib/groq-ai"
 
 export function useWeatherSummary(weatherData: WeatherData, forecast: ForecastData | null) {
   const [summary, setSummary] = useState<string | null>(null)
@@ -22,8 +16,17 @@ export function useWeatherSummary(weatherData: WeatherData, forecast: ForecastDa
       setError(null)
 
       try {
-        const generatedSummary = await generateWeatherSummary(weatherData, forecast)
-        setSummary(generatedSummary)
+        const res = await fetch("/api/weather-summary", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ weatherData, forecast }),
+        })
+        const data = await res.json()
+        if (res.ok) {
+          setSummary(data.summary)
+        } else {
+          setError(data.error || "Failed to generate summary")
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to generate summary")
       } finally {
@@ -50,8 +53,17 @@ export function useWeatherInsights(weatherData: WeatherData, forecast: ForecastD
       setError(null)
 
       try {
-        const generatedInsights = await generateWeatherInsights(weatherData, forecast)
-        setInsights(generatedInsights)
+        const res = await fetch("/api/weather-insights", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ weatherData, forecast }),
+        })
+        const data = await res.json()
+        if (res.ok) {
+          setInsights(data.insights)
+        } else {
+          setError(data.error || "Failed to generate insights")
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to generate insights")
       } finally {
@@ -70,12 +82,18 @@ export function useNaturalLanguageSearch() {
 
   const processNaturalLanguageQuery = async (query: string): Promise<string | null> => {
     setLoading(true)
-
     try {
-      const result = await processQuery(query)
-      return result
-    } catch (error) {
-      throw error
+      const res = await fetch("/api/nl-query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        return data.city
+      } else {
+        throw new Error(data.error || "Failed to process query")
+      }
     } finally {
       setLoading(false)
     }
@@ -93,12 +111,19 @@ export function useSmartAlerts(weatherData: WeatherData, forecast: ForecastData 
 
     const fetchAlerts = async () => {
       setLoading(true)
-
       try {
-        const generatedAlerts = await generateSmartAlerts(weatherData, forecast)
-        setAlerts(generatedAlerts)
+        const res = await fetch("/api/smart-alerts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ weatherData, forecast }),
+        })
+        const data = await res.json()
+        if (res.ok) {
+          setAlerts(data.alerts)
+        } else {
+          setAlerts([])
+        }
       } catch (err) {
-        console.error("Failed to generate alerts:", err)
         setAlerts([])
       } finally {
         setLoading(false)
